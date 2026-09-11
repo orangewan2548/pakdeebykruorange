@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PakDee English — ระบบเรียนภาษาอังกฤษเน้นความขยันและพัฒนาการ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream: #FFF6E9;
+    --ink: #211812;
+    --orange: #FF6B00;
+    --orange-dark: #E05300;
+    --peel: #FFB35C;
+    --leaf: #4FA35C;
+    --yellow: #FFC700;
+    --mint: #34D399;
+    --lav: #818CF8;
+    --pink: #FF5E97;
+    --red: #EF4444;
+    --card: #FFFFFF;
+    --dark-card: #1E1B18;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  
+  body {
+    margin: 0;
+    background-color: #FFFBF2;
+    background-image:
+      radial-gradient(rgba(255,107,0,.13) 2.5px, transparent 2.5px),
+      radial-gradient(rgba(255,94,151,.11) 2.5px, transparent 2.5px);
+    background-size: 34px 34px, 34px 34px;
+    background-position: 0 0, 17px 17px;
+    color: var(--ink);
+    font-family: 'Mitr', sans-serif;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, h4 { font-family: 'Fredoka', 'Mitr', sans-serif; margin: 0; }
+
+  .nav {
+    position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 24px; background: rgba(255,246,233,.95); backdrop-filter: blur(8px); border-bottom: 3.5px solid var(--ink);
+  }
+  .logo { font-family: 'Fredoka'; font-weight: 700; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
+  .user-info { display: flex; align-items: center; gap: 12px; }
+  .badge { background: var(--yellow); border: 2.5px solid var(--ink); padding: 2px 10px; border-radius: 999px; font-size: .85rem; font-weight: 600; }
+  .btn-logout { background: var(--red); color: #fff; border: 2.5px solid var(--ink); padding: 4px 12px; border-radius: 10px; cursor: pointer; font-family: 'Mitr'; font-weight: 500; }
+
+  .container { max-width: 1050px; margin: 0 auto; padding: 20px; }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* AUTH CARD */
+  .auth-card {
+    max-width: 460px; margin: 30px auto; background: var(--card); border: 3.5px solid var(--ink);
+    border-radius: 28px; padding: 28px; box-shadow: 8px 8px 0 var(--ink); text-align: center;
+    position: relative;
+  }
+  .auth-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+  .auth-tab { flex: 1; padding: 8px; border: none; background: none; font-family: 'Mitr'; font-size: 1rem; cursor: pointer; font-weight: 500; color: #888; }
+  .auth-tab.active { color: var(--orange); font-weight: 600; border-bottom: 3px solid var(--orange); }
+  
+  .role-selector { display: flex; gap: 10px; margin: 15px 0; }
+  .role-btn {
+    flex: 1; padding: 8px; border: 2.5px solid var(--ink); border-radius: 12px; background: #fff;
+    cursor: pointer; font-family: 'Mitr'; font-weight: 500; transition: .2s;
+  }
+  .role-btn.active { background: var(--orange); color: #fff; box-shadow: 2px 2px 0 var(--ink); }
+
+  .form-group { text-align: left; margin-bottom: 12px; }
+  .form-group label { display: block; margin-bottom: 4px; font-size: .88rem; font-weight: 500; }
+  .form-group input, .form-group select { width: 100%; padding: 10px 14px; border: 2.5px solid var(--ink); border-radius: 12px; font-family: 'Mitr'; font-size: .95rem; }
+  
+  .btn-primary {
+    width: 100%; padding: 12px; background: var(--orange); color: #fff; border: 3px solid var(--ink);
+    border-radius: 16px; font-family: 'Mitr'; font-size: 1.1rem; font-weight: 600; cursor: pointer; box-shadow: 4px 4px 0 var(--ink);
+    margin-top: 10px;
+  }
+  .btn-primary:hover { background: var(--orange-dark); }
+
+  /* TABS */
+  .main-nav-tabs { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 25px; border-bottom: 3px solid var(--ink); }
+  .nav-tab-btn {
+    background: #fff; border: 3px solid var(--ink); border-radius: 16px; padding: 10px 20px;
+    font-family: 'Mitr'; font-weight: 600; cursor: pointer; white-space: nowrap; box-shadow: 3px 3px 0 var(--ink);
+  }
+  .nav-tab-btn.active { background: var(--orange); color: #fff; }
+
+  .unit-selector { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
+  .unit-btn {
+    background: #fff; border: 2.5px solid var(--ink); border-radius: 12px; padding: 8px 16px;
+    font-family: 'Mitr'; font-weight: 500; cursor: pointer; white-space: nowrap;
+  }
+  .unit-btn.active { background: var(--yellow); font-weight: 600; box-shadow: 2px 2px 0 var(--ink); }
+
+  /* CARDS */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+
+  .box-card {
+    background: var(--card); border: 3.5px solid var(--ink); border-radius: 24px; padding: 24px;
+    box-shadow: 6px 6px 0 var(--ink); margin-bottom: 24px; position: relative;
+  }
+
+  .badge-pill {
+    display: inline-block; background: var(--leaf); color: #fff; padding: 4px 14px; border-radius: 999px;
+    font-size: .85rem; font-weight: 600; border: 2px solid var(--ink); margin-bottom: 12px;
+  }
+
+  /* MATCHING GAME */
+  .match-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 15px; }
+  @media (max-width: 600px) { .match-grid { grid-template-columns: repeat(2, 1fr); } }
+  .match-card {
+    background: #fff; border: 3px solid var(--ink); border-radius: 16px; padding: 20px 10px;
+    text-align: center; font-weight: 600; font-size: 1.05rem; cursor: pointer; box-shadow: 4px 4px 0 var(--ink);
+    user-select: none; transition: transform .1s; min-height: 80px; display: flex; align-items: center; justify-content: center;
+  }
+  .match-card:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+  .match-card.selected { background: var(--peel); color: #fff; border-color: var(--ink); }
+  .match-card.matched { background: var(--mint); color: #000; visibility: visible; opacity: .6; pointer-events: none; border-color: var(--ink); }
+
+  /* CALL SCREEN (AIRLEARN STYLE) */
+  .call-container {
+    background: var(--dark-card); border: 4px solid var(--ink); border-radius: 32px;
+    max-width: 420px; margin: 0 auto; overflow: hidden; box-shadow: 8px 8px 0 var(--ink);
+    position: relative; color: #fff; text-align: center;
+  }
+  .call-header { padding: 15px; font-size: .9rem; color: #aaa; background: rgba(0,0,0,.3); display: flex; justify-content: space-between; align-items: center; }
+  .call-avatar-wrap { padding: 30px 20px; position: relative; }
+  .call-avatar {
+    width: 140px; height: 140px; background: linear-gradient(135deg, var(--orange), var(--yellow));
+    border-radius: 50%; border: 4px solid #fff; margin: 0 auto; display: flex; align-items: center;
+    justify-content: center; font-size: 4.5rem; box-shadow: 0 10px 25px rgba(0,0,0,.5);
+    transition: transform .2s;
+  }
+  .call-avatar.speaking {
+    animation: pulse 0.6s infinite alternate;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,107,0,0.7); }
+    100% { transform: scale(1.08); box-shadow: 0 0 0 20px rgba(255,107,0,0); }
+  }
+
+  .call-subtitles {
+    min-height: 70px; background: rgba(0,0,0,.6); padding: 12px 18px; margin: 10px 15px;
+    border-radius: 16px; font-size: .95rem; border: 1.5px solid rgba(255,255,255,.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .call-actions { padding: 20px; display: flex; justify-content: center; gap: 20px; align-items: center; background: rgba(0,0,0,.4); }
+  .btn-call-action {
+    width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--ink);
+    display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer;
+    box-shadow: 3px 3px 0 var(--ink); transition: .1s;
+  }
+  .btn-accept { background: var(--mint); color: #fff; }
+  .btn-decline { background: var(--red); color: #fff; }
+  .btn-mic { background: var(--lav); color: #fff; }
+
+  /* BUILDER UI */
+  .interactive-box { background: #EEECFF; border: 3.5px solid var(--ink); border-radius: 24px; padding: 24px; box-shadow: 6px 6px 0 var(--ink); }
+  .builder-select { padding: 8px 14px; border: 2.5px solid var(--ink); border-radius: 12px; font-family: 'Mitr'; font-size: 1rem; font-weight: 600; background: #fff; cursor: pointer; }
+
+  /* TEACHER TABLE */
+  .data-table { width: 100%; border-collapse: collapse; background: #fff; border: 3px solid var(--ink); border-radius: 16px; overflow: hidden; box-shadow: 5px 5px 0 var(--ink); }
+  .data-table th, .data-table td { padding: 12px 16px; text-align: left; border-bottom: 2px solid var(--ink); }
+  .data-table th { background: #FFF0DA; font-weight: 600; }
+
+  /* EMOJI ATTITUDE SURVEY */
+  .emoji-scale { display: flex; gap: 10px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
+  .emoji-btn {
+    background: #fff; border: 2.5px solid var(--ink); border-radius: 16px; padding: 10px 14px;
+    font-size: 1.8rem; cursor: pointer; box-shadow: 3px 3px 0 var(--ink); transition: transform .12s;
+    display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 64px;
+  }
+  .emoji-btn span.emoji-label { font-family: 'Mitr'; font-size: .7rem; font-weight: 600; color: #666; }
+  .emoji-btn:hover { transform: translateY(-3px); }
+  .emoji-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+  .emoji-btn.picked { background: var(--yellow); }
+  .survey-question { border-bottom: 2px dashed #ccc; padding-bottom: 18px; margin-bottom: 18px; }
+  .survey-question:last-child { border-bottom: none; margin-bottom: 0; }
+  .chip-tag { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: .8rem; font-weight: 600; border: 1.5px solid var(--ink); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo">🍊 PakDee<span style="color:var(--orange)">English</span></div>
+  <div class="user-info" id="navUserInfo" style="display: none;">
+    <span class="badge" id="userRoleBadge">นักเรียน</span>
+    <span id="userNameDisplay" style="font-weight: 600;">-</span>
+    <button class="btn-logout" onclick="logout()">ออกจากระบบ</button>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- AUTH VIEW -->
+  <div id="authView" class="view active">
+    <div class="auth-card">
+      <h2>PakDee English 🍊</h2>
+      <p style="font-size: .85rem; color: #666; margin-top: 4px;">เรียนภาษาอังกฤษสนุกๆ ทุกวัน ✨</p>
+      
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabBtnLogin" onclick="switchAuthMode('login')">เข้าสู่ระบบ</button>
+        <button class="auth-tab" id="tabBtnRegister" onclick="switchAuthMode('register')">สร้างบัญชีใหม่</button>
+      </div>
+
+      <div class="role-selector">
+        <button class="role-btn active" id="btnRoleStudent" onclick="setRole('student')">👨‍🎓 นักเรียน</button>
+        <button class="role-btn" id="btnRoleTeacher" onclick="setRole('teacher')">👩‍🏫 คุณครู</button>
+      </div>
+
+      <form onsubmit="handleAuthSubmit(event)">
+        <div class="form-group" id="groupStudentId" style="display:none;">
+          <label>เลขที่ / รหัสนักเรียน (1-100)</label>
+          <input type="number" id="txtStudentId" min="1" max="100" placeholder="เช่น 1, 25, 99">
+        </div>
+
+        <div class="form-group" id="groupName" style="display:none;">
+          <label>ชื่อ-นามสกุล</label>
+          <input type="text" id="txtName" placeholder="เช่น ด.ช. ก้องเกียรติ รักดี">
+        </div>
+
+        <div class="form-group">
+          <label>ชื่อผู้ใช้งาน (Username)</label>
+          <input type="text" id="txtUsername" required placeholder="กรอกชื่อผู้ใช้งาน...">
+        </div>
+
+        <div class="form-group">
+          <label>รหัสผ่าน (Password)</label>
+          <input type="password" id="txtPassword" required placeholder="••••••••">
+        </div>
+
+        <button type="submit" class="btn-primary" id="btnAuthSubmit">เข้าสู่ระบบ 🚀</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN APP VIEW -->
+  <div id="appView" class="view">
+    
+    <!-- MAIN NAVIGATION TABS -->
+    <div class="main-nav-tabs">
+      <button class="nav-tab-btn active" onclick="switchMainTab('learnTab')">📚 บทเรียน & กิจกรรม</button>
+      <button class="nav-tab-btn" onclick="switchMainTab('callTab')">📞 คุยสาย FaceTime ครูส้ม AI</button>
+      <button class="nav-tab-btn" onclick="switchMainTab('matchTab')">🧩 เกมจับคู่ป้าย</button>
+      <button class="nav-tab-btn" onclick="switchMainTab('surveyTab')">📝 แบบประเมินเจตคติ</button>
+      <button class="nav-tab-btn" onclick="switchMainTab('researchTab')">📖 แนวคิดงานวิจัย</button>
+      <button class="nav-tab-btn" id="teacherTabBtn" style="display:none;" onclick="switchMainTab('teacherTab')">👩‍🏫 แดชบอร์ดครูผู้สอน (100 บัญชี)</button>
+    </div>
+
+    <!-- 1. LEARNING TAB -->
+    <div id="learnTab" class="tab-page">
+      <div class="grid-3" style="margin-bottom: 24px;">
+        <div class="box-card" style="margin:0; padding:16px 20px;">
+          <div style="font-size:.85rem; color:#666;">คะแนนความขยัน (Effort Points)</div>
+          <div style="font-size:2rem; font-weight:700; color:var(--orange); font-family:'Fredoka';" id="studentEffortScore">0</div>
+          <small>💪 ยิ่งฝึกซ้อม ยิ่งได้คะแนนเพิ่ม!</small>
+        </div>
+        <div class="box-card" style="margin:0; padding:16px 20px;">
+          <div style="font-size:.85rem; color:#666;">การฝึกอย่างต่อเนื่อง (Streak)</div>
+          <div style="font-size:2rem; font-weight:700; color:var(--leaf); font-family:'Fredoka';" id="studentStreak">🔥 1 วัน</div>
+          <small>เข้าเรียนสม่ำเสมอดีมาก!</small>
+        </div>
+        <div class="box-card" style="margin:0; padding:16px 20px;">
+          <div style="font-size:.85rem; color:#666;">ระดับความมั่นใจภาษาอังกฤษ</div>
+          <div style="font-size:2rem; font-weight:700; color:var(--lav); font-family:'Fredoka';" id="studentConfidence">Level 1</div>
+          <small>📈 พัฒนาขึ้นเรื่อยๆ</small>
+        </div>
+      </div>
+
+      <!-- UNIT SELECTOR -->
+      <div class="unit-selector">
+        <button class="unit-btn active" id="ubtn1" onclick="selectUnit(1)">🍱 Unit 1: Food in the Fridge</button>
+        <button class="unit-btn" id="ubtn2" onclick="selectUnit(2)">🏫 Unit 2: Daily Routines</button>
+        <button class="unit-btn" id="ubtn3" onclick="selectUnit(3)">🛑 Unit 3: Safety First</button>
+        <button class="unit-btn" id="ubtn4" onclick="selectUnit(4)">🚲 Unit 4: Having Fun</button>
+      </div>
+
+      <!-- GRAMMAR DISPLAY -->
+      <div class="box-card">
+        <span class="badge-pill" id="unitBadge">Unit 1: Grammar Pattern</span>
+        <h3 id="unitTitle" style="margin-bottom:12px;">แพทเทิร์นประโยคภาษาอังกฤษ</h3>
+        <div class="grid-3" id="grammarGrid"></div>
+      </div>
+
+      <!-- SENTENCE BUILDER -->
+      <div class="interactive-box">
+        <span class="badge-pill" style="background:var(--lav);">Sentence Builder</span>
+        <h3 style="margin: 10px 0;">ประกอบประโยคจากแพทเทิร์น</h3>
+        
+        <div style="background:#fff; border:3.5px solid var(--ink); border-radius:20px; padding:20px; margin:15px 0; display:flex; align-items:center; gap:10px; flex-wrap:wrap;" id="builderControls"></div>
+
+        <div style="background:#fff; border:2.5px solid var(--ink); border-radius:14px; padding:12px 18px; font-weight:600; font-size:1.1rem; margin-bottom:15px;" id="builderResultText">
+          Loading sentence...
+        </div>
+
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button class="btn-primary" style="width:auto; padding:8px 20px; margin:0;" onclick="submitSentence()">เช็กประโยคนี้ ✨</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. AIRLEARN FACETIME CALL TAB -->
+    <div id="callTab" class="tab-page" style="display:none;">
+      <div class="box-card" style="text-align:center;">
+        <h2>📞 Kru Som Video Call (เหมือน Airlearn)</h2>
+        <p style="color:#666; font-size:.9rem; margin-bottom:20px;">
+          รับสายและฝึกพูดภาษาอังกฤษกับครูส้ม AI แบบสมจริง พร้อมน้ำเสียงที่มีอารมณ์และจังหวะจะโคน
+        </p>
+
+        <div class="call-container">
+          <div class="call-header">
+            <span>🔴 LIVE FaceTime</span>
+            <span id="callTimer">00:00</span>
+          </div>
+
+          <div class="call-avatar-wrap">
+            <div class="call-avatar" id="kruSomAvatar">🍊</div>
+            <h3 style="margin-top:15px; color:#fff;" id="callStatusTitle">ครูส้ม AI สายโทรเข้า...</h3>
+            <p style="font-size:.85rem; color:#aaa;" id="callStatusSub">Unit: Food & Conversation</p>
+          </div>
+
+          <div class="call-subtitles" id="callSubtitles">
+            กดปุ่มสีเขียว "รับสาย" เพื่อเริ่มคุยกับครูส้มได้เลยค่ะ! 📞
+          </div>
+
+          <div class="call-actions">
+            <button class="btn-call-action btn-decline" onclick="endCall()" title="วางสาย">📵</button>
+            <button class="btn-call-action btn-accept" id="btnAcceptCall" onclick="acceptCall()" title="รับสาย">📞</button>
+            <button class="btn-call-action btn-mic" id="btnMic" onclick="toggleMic()" style="display:none;" title="พูดโต้ตอบ">🎙️</button>
+          </div>
+        </div>
+
+        <div style="margin-top:20px; max-width:420px; margin-left:auto; margin-right:auto;">
+          <input type="text" id="txtCallInput" placeholder="หรือพิมพ์ตอบครูส้มตรงนี้..." style="width:70%; padding:10px; border:2.5px solid var(--ink); border-radius:12px; font-family:'Mitr';">
+          <button onclick="sendTextToCall()" style="padding:10px 15px; background:var(--orange); color:#fff; border:2.5px solid var(--ink); border-radius:12px; font-family:'Mitr'; font-weight:600; cursor:pointer;">ส่ง</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. MATCHING GAME TAB -->
+    <div id="matchTab" class="tab-page" style="display:none;">
+      <div class="box-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h2>🧩 เกมจับคู่ป้ายคำศัพท์ & ความหมาย</h2>
+            <p style="color:#666; font-size:.9rem;">จับคู่คำศัพท์ภาษาอังกฤษกับคำแปลทั้ง 10 คู่ให้ครบก่อนเวลาหมด!</p>
+          </div>
+          <button onclick="initMatchGame()" style="background:var(--yellow); border:2.5px solid var(--ink); border-radius:12px; padding:8px 16px; font-family:'Mitr'; font-weight:600; cursor:pointer;">🔄 เริ่มเกมใหม่</button>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:16px 0;">
+          <div style="background:var(--pink); color:#fff; border:2.5px solid var(--ink); border-radius:14px; padding:8px 18px; font-weight:700; font-family:'Fredoka';" id="matchTimerDisplay">⏱️ 01:00</div>
+          <div style="background:var(--mint); color:#000; border:2.5px solid var(--ink); border-radius:14px; padding:8px 18px; font-weight:700; font-family:'Fredoka';" id="matchProgressDisplay">✅ 0 / 10 คู่</div>
+        </div>
+
+        <div class="match-grid" id="matchGrid"></div>
+      </div>
+    </div>
+
+    <!-- 4. SURVEY TAB -->
+    <div id="surveyTab" class="tab-page" style="display:none;">
+      <div class="box-card">
+        <h2>วัดเจตคติและความมั่นใจของคุณ 📈</h2>
+        <p style="color:#666; font-size:.9rem; margin-bottom:20px;">ทำแบบประเมินเพื่อติดตามความรู้สึกและความมั่นใจในการเรียน</p>
+
+        <div id="surveyForm">
+          <div class="survey-question" data-qid="q1">
+            <b>1. ฉันรู้สึกกล้าพูด/สื่อสารภาษาอังกฤษมากขึ้น</b>
+            <div class="emoji-scale">
+              <button class="emoji-btn" onclick="saveSurveyScore('q1',1,'😞',this)">😞<span class="emoji-label">น้อยสุด</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q1',2,'😕',this)">😕<span class="emoji-label">น้อย</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q1',3,'😐',this)">😐<span class="emoji-label">ปานกลาง</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q1',4,'🙂',this)">🙂<span class="emoji-label">ดี</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q1',5,'🤩',this)">🤩<span class="emoji-label">มากสุด</span></button>
+            </div>
+          </div>
+
+          <div class="survey-question" data-qid="q2">
+            <b>2. ฉันรู้สึกสนุกเวลาทำกิจกรรม/เกมในบทเรียนนี้</b>
+            <div class="emoji-scale">
+              <button class="emoji-btn" onclick="saveSurveyScore('q2',1,'😞',this)">😞<span class="emoji-label">น้อยสุด</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q2',2,'😕',this)">😕<span class="emoji-label">น้อย</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q2',3,'😐',this)">😐<span class="emoji-label">ปานกลาง</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q2',4,'🙂',this)">🙂<span class="emoji-label">ดี</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q2',5,'🤩',this)">🤩<span class="emoji-label">มากสุด</span></button>
+            </div>
+          </div>
+
+          <div class="survey-question" data-qid="q3">
+            <b>3. ฉันไม่กลัวที่จะพูดผิดเวลาฝึกภาษาอังกฤษ</b>
+            <div class="emoji-scale">
+              <button class="emoji-btn" onclick="saveSurveyScore('q3',1,'😞',this)">😞<span class="emoji-label">น้อยสุด</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q3',2,'😕',this)">😕<span class="emoji-label">น้อย</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q3',3,'😐',this)">😐<span class="emoji-label">ปานกลาง</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q3',4,'🙂',this)">🙂<span class="emoji-label">ดี</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q3',5,'🤩',this)">🤩<span class="emoji-label">มากสุด</span></button>
+            </div>
+          </div>
+
+          <div class="survey-question" data-qid="q4">
+            <b>4. โดยรวมฉันชอบเรียนภาษาอังกฤษกับ PakDee English 🍊</b>
+            <div class="emoji-scale">
+              <button class="emoji-btn" onclick="saveSurveyScore('q4',1,'😞',this)">😞<span class="emoji-label">น้อยสุด</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q4',2,'😕',this)">😕<span class="emoji-label">น้อย</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q4',3,'😐',this)">😐<span class="emoji-label">ปานกลาง</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q4',4,'🙂',this)">🙂<span class="emoji-label">ดี</span></button>
+              <button class="emoji-btn" onclick="saveSurveyScore('q4',5,'🤩',this)">🤩<span class="emoji-label">มากสุด</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. RESEARCH TAB -->
+    <div id="researchTab" class="tab-page" style="display:none;">
+      <div style="margin-bottom:30px;">
+        <h2>📖 แนวคิดและทฤษฎีเบื้องหลังการพัฒนา</h2>
+        <p style="color:#666; max-width: 760px;">
+          PakDee English ออกแบบบนฐานของ <b>Communicative Language Teaching (CLT)</b> ร่วมกับ
+          <b>Sentence Pattern-Based Learning</b> และแนวคิดด้านจิตวิทยาการเรียนรู้ภาษาที่สอง (Second Language Acquisition)
+          โดยมุ่งพัฒนาผู้เรียน 3 ด้านไปพร้อมกัน คือ ความสามารถในการสื่อสาร เจตคติที่ดีต่อวิชาภาษาอังกฤษ
+          และความมั่นใจในการใช้ภาษาของตนเอง ซึ่งงานวิจัยทางการศึกษาพบว่าทั้งสามด้านนี้ส่งผลต่อกันและกันโดยตรง
+        </p>
+
+        <div class="grid-3" style="margin-top:20px;">
+          <div class="box-card" style="background:#FFE8E0;">
+            <h3>🗣️ สมรรถนะการสื่อสาร</h3>
+            <p style="font-size:.9rem;">
+              ยึดหลัก Communicative Language Teaching (CLT) ของ Hymes และ Canale &amp; Swain ที่เน้นให้ผู้เรียน
+              "ใช้ภาษาเพื่อสื่อความหมายจริง" มากกว่าท่องจำไวยากรณ์ล้วนๆ แอปจึงให้ฝึกพูดกับ FaceTime ครูส้ม AI
+              ที่เลียนแบบจังหวะและน้ำเสียงคนจริง (prosody) เพื่อสร้างสถานการณ์สนทนาจำลองที่ใกล้เคียงชีวิตจริง
+              ช่วยเชื่อมโยงแพทเทิร์นประโยคที่เรียนไปสู่การใช้งานจริงได้ทันที
+            </p>
+          </div>
+          <div class="box-card" style="background:#FFF4D0;">
+            <h3>😄 เจตคติที่ดี (Affective Filter)</h3>
+            <p style="font-size:.9rem;">
+              อ้างอิงทฤษฎี Affective Filter Hypothesis ของ Stephen Krashen ที่ระบุว่าอารมณ์เชิงลบ เช่น
+              ความวิตกกังวลหรือความเบื่อหน่าย จะเป็น "ตัวกรอง" ขัดขวางการรับข้อมูลภาษาเข้าสู่สมอง แอปจึงเปลี่ยน
+              การเรียนให้เป็นการเล่นผ่านเกมจับคู่คำศัพท์ 10 คู่แบบจับเวลา ระบบสะสมแต้มความขยัน (Effort Points)
+              และอีโมจิในแบบประเมิน เพื่อลดความเครียดและเพิ่มแรงจูงใจภายใน (intrinsic motivation) ตามแนวคิด
+              Self-Determination Theory ของ Deci &amp; Ryan
+            </p>
+          </div>
+          <div class="box-card" style="background:#E2F8EE;">
+            <h3>💪 ความมั่นใจส่วนบุคคล</h3>
+            <p style="font-size:.9rem;">
+              อิงแนวคิด Growth Mindset ของ Carol Dweck และหลักการให้ฟีดแบ็กเชิงบวก (positive reinforcement)
+              โดยไม่ตัดสินความผิดพลาดว่าเป็นความล้มเหลว แต่มองเป็นส่วนหนึ่งของการฝึกฝน ทุกครั้งที่ตอบผิดในกิจกรรม
+              Sentence Builder ผู้เรียนจะยังได้รับคำให้กำลังใจและแต้มความพยายาม ส่งเสริมให้กล้าลองผิดลองถูก
+              ซึ่งเป็นปัจจัยสำคัญของ Willingness to Communicate (WTC) ในภาษาที่สอง
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="box-card" style="background:#F4F1FF;">
+        <h3 style="margin-bottom:10px;">🔬 กรอบแนวคิดการวิจัย (Research Framework)</h3>
+        <p style="font-size:.9rem; color:#444;">
+          งานวิจัยนี้ตั้งสมมติฐานว่า การจัดการเรียนรู้ที่ผสาน <b>(1) การฝึกสื่อสารกับคู่สนทนา AI</b>,
+          <b>(2) กิจกรรมเกมเพื่อสร้างเจตคติเชิงบวก</b> และ <b>(3) ระบบฟีดแบ็กที่เสริมสร้างความมั่นใจ</b>
+          เข้าด้วยกัน จะช่วยพัฒนาทักษะการพูดภาษาอังกฤษของนักเรียนได้มากกว่าการสอนไวยากรณ์แบบบรรยายเพียงอย่างเดียว
+          โดยใช้เครื่องมือเก็บข้อมูล 3 ชุด ได้แก่ คะแนนความขยัน (Effort Points) เป็นตัวชี้วัดพฤติกรรม,
+          แบบประเมินเจตคติแบบอีโมจิ (Emoji Likert Scale) เพื่อวัดความรู้สึก และผลการฝึกพูดจากบทสนทนา FaceTime
+          เพื่อวัดพัฒนาการด้านการสื่อสาร
+        </p>
+      </div>
+
+      <div class="box-card" style="margin-top:24px;">
+        <h3 style="margin-bottom:12px;">📚 ข้อมูลอ่านเพิ่มเติม (Further Reading)</h3>
+        <ul style="font-size:.9rem; line-height:1.9; padding-left:20px; margin:0;">
+          <li>
+            <b>Communicative Language Teaching (CLT)</b> — แนวคิดการสอนภาษาที่เน้นการสื่อสารจริง
+            <br><a href="https://en.wikipedia.org/wiki/Communicative_language_teaching" target="_blank" rel="noopener">en.wikipedia.org/wiki/Communicative_language_teaching</a>
+          </li>
+          <li>
+            <b>Krashen's Input &amp; Affective Filter Hypothesis</b> — ทฤษฎีตัวกรองทางอารมณ์ในการรับภาษา
+            <br><a href="https://en.wikipedia.org/wiki/Input_hypothesis" target="_blank" rel="noopener">en.wikipedia.org/wiki/Input_hypothesis</a>
+          </li>
+          <li>
+            <b>Self-Determination Theory</b> — ทฤษฎีแรงจูงใจภายในของ Deci &amp; Ryan
+            <br><a href="https://en.wikipedia.org/wiki/Self-determination_theory" target="_blank" rel="noopener">en.wikipedia.org/wiki/Self-determination_theory</a>
+          </li>
+          <li>
+            <b>Growth Mindset</b> — แนวคิดกรอบความคิดแบบเติบโตของ Carol Dweck
+            <br><a href="https://en.wikipedia.org/wiki/Mindset#Growth_mindset" target="_blank" rel="noopener">en.wikipedia.org/wiki/Mindset</a>
+          </li>
+          <li>
+            <b>Willingness to Communicate (WTC)</b> — ความเต็มใจในการสื่อสารด้วยภาษาที่สอง
+            <br><a href="https://en.wikipedia.org/wiki/Willingness_to_communicate" target="_blank" rel="noopener">en.wikipedia.org/wiki/Willingness_to_communicate</a>
+          </li>
+          <li>
+            <b>Gamification in Education</b> — การนำกลไกเกมมาใช้ในการเรียนรู้
+            <br><a href="https://en.wikipedia.org/wiki/Gamification_of_learning" target="_blank" rel="noopener">en.wikipedia.org/wiki/Gamification_of_learning</a>
+          </li>
+        </ul>
+        <p style="font-size:.8rem; color:#888; margin-top:14px;">
+          หมายเหตุ: รายการข้างต้นเป็นแหล่งข้อมูลเบื้องต้นสำหรับผู้ที่สนใจศึกษาทฤษฎีที่เกี่ยวข้องเพิ่มเติม
+          ผู้พัฒนางานวิจัยควรอ้างอิงบทความวิชาการฉบับเต็มประกอบการเขียนกรอบแนวคิดในรายงานจริง
+        </p>
+      </div>
+    </div>
+
+    <!-- 6. TEACHER DASHBOARD TAB -->
+    <div id="teacherTab" class="tab-page" style="display:none;">
+      <div class="box-card">
+        <h2>👩‍🏫 แดชบอร์ดครูผู้สอน — ระบบจัดการนักเรียน 100 บัญชี</h2>
+        <p style="color:#666; font-size:.9rem; margin-bottom:20px;">
+          ติดตามความขยัน คะแนนการฝึก FaceTime และการทำกิจกรรมของนักเรียนทั้งห้อง
+        </p>
+
+        <div style="margin-bottom:15px; display:flex; gap:10px;">
+          <button class="unit-btn active" onclick="initTeacherDemoData()">⚡ สร้างบัญชีนักเรียนจำลอง (เลขที่ 1-100)</button>
+        </div>
+
+        <div style="max-height: 450px; overflow-y: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>เลขที่</th>
+                <th>ชื่อ-นามสกุล</th>
+                <th>Username</th>
+                <th>ความขยัน (Effort Points)</th>
+                <th>สถานะการใช้งาน</th>
+              </tr>
+            </thead>
+            <tbody id="teacherStudentTable">
+              <!-- Render Student Accounts -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  /* DATABASE HANDLING (IN-MEMORY FOR 100+ USERS)
+     หมายเหตุ: เดิมใช้ localStorage แต่ระบบแสดงไฟล์ในแชทของ Claude ไม่อนุญาตให้ใช้ localStorage
+     จึงเปลี่ยนมาเก็บข้อมูลไว้ในตัวแปรของหน้าเว็บแทน (ข้อมูลจะหายเมื่อรีเฟรชหน้า
+     ถ้าต้องการให้ข้อมูลถูกบันทึกถาวรจริง แนะนำให้นำไฟล์นี้ไปโฮสต์เป็นเว็บไซต์จริง) */
+  let inMemoryDB = { users: [], currentUserId: null };
+
+  function getDB() {
+    return inMemoryDB;
+  }
+
+  function saveDB(db) {
+    inMemoryDB = db;
+  }
+
+  /* UNITS DATA STRUCTURE */
+  const unitsData = {
+    1: {
+      title: "Unit 1: Food in the Fridge 🍱",
+      badge: "Unit 1: Grammar Pattern",
+      grammar: [
+        { title: "There is / isn't + เอกพจน์", desc: '"There is some ham in the fridge."' },
+        { title: "Are there any + พหูพจน์?", desc: '"Are there any french fries?"' },
+        { title: "How many + พหูพจน์?", desc: '"How many pies are there?"' }
+      ],
+      builder: {
+        prefix: "There",
+        sel1: ["is", "are"],
+        sel2: ["some", "any"],
+        sel3: ["ham", "pies"],
+        suffix: "in the fridge.",
+        correctCondition: (s1, s2, s3) => (s1==='is' && s3==='ham') || (s1==='are' && s3==='pies')
+      },
+      matchPairs: [
+        { word: "Ham", match: "แฮม" },
+        { word: "Bacon", match: "เบคอน" },
+        { word: "Fridge", match: "ตู้เย็น" },
+        { word: "Pies", match: "พาย" },
+        { word: "Milk", match: "นม" },
+        { word: "Egg", match: "ไข่" },
+        { word: "Cheese", match: "ชีส" },
+        { word: "Sausage", match: "ไส้กรอก" },
+        { word: "Vegetable", match: "ผัก" },
+        { word: "Fruit", match: "ผลไม้" }
+      ],
+      callDialogs: [
+        { text: "Hello! Kru Som here! Are you hungry today?", audioText: "Hello there! Kru Som here! Are you hungry today?", pitch: 1.2, rate: 1.0 },
+        { text: "Great! Let's check the fridge. Is there any ham?", audioText: "Great! Let's check the fridge. Is there any ham?", pitch: 1.1, rate: 0.95 },
+        { text: "Awesome pronunciation! You are doing so well!", audioText: "Awesome pronunciation! You are doing so well!", pitch: 1.3, rate: 1.1 }
+      ]
+    },
+    2: {
+      title: "Unit 2: Daily Routines 🏫",
+      badge: "Unit 2: Grammar Pattern",
+      grammar: [
+        { title: "What time do you + V.1?", desc: '"What time do you get up?"' },
+        { title: "I + V.1 + at + [เวลา]", desc: '"I brush my teeth at 6:30 AM."' }
+      ],
+      builder: {
+        prefix: "I",
+        sel1: ["get up", "go to school"],
+        sel2: ["at", "in"],
+        sel3: ["6:00 AM", "the morning"],
+        suffix: "every day.",
+        correctCondition: (s1, s2, s3) => (s2==='at' && s3==='6:00 AM') || (s2==='in' && s3==='the morning')
+      },
+      matchPairs: [
+        { word: "Get up", match: "ตื่นนอน" },
+        { word: "Brush teeth", match: "แปรงฟัน" },
+        { word: "Go to school", match: "ไปโรงเรียน" },
+        { word: "Breakfast", match: "อาหารเช้า" },
+        { word: "Take a shower", match: "อาบน้ำ" },
+        { word: "Have lunch", match: "ทานอาหารกลางวัน" },
+        { word: "Do homework", match: "ทำการบ้าน" },
+        { word: "Watch TV", match: "ดูโทรทัศน์" },
+        { word: "Go to bed", match: "เข้านอน" },
+        { word: "Wash face", match: "ล้างหน้า" }
+      ],
+      callDialogs: [
+        { text: "Good morning! What time do you usually get up?", audioText: "Good morning! What time do you usually get up?", pitch: 1.2, rate: 1.0 },
+        { text: "That's so early! You are a hardworking student!", audioText: "That's so early! You are a hardworking student!", pitch: 1.3, rate: 1.0 }
+      ]
+    },
+    3: {
+      title: "Unit 3: Safety First 🛑",
+      badge: "Unit 3: Grammar Pattern",
+      grammar: [
+        { title: "You must + V.1", desc: '"You must wear a helmet."' },
+        { title: "You shouldn't + V.1", desc: '"You shouldn\'t play near the road."' }
+      ],
+      builder: {
+        prefix: "You",
+        sel1: ["must", "shouldn't"],
+        sel2: ["use a crosswalk", "play near the road"],
+        sel3: ["for safety", "when crossing"],
+        suffix: ".",
+        correctCondition: (s1, s2, s3) => (s1==='must' && s2==='use a crosswalk') || (s1==="shouldn't" && s2==='play near the road')
+      },
+      matchPairs: [
+        { word: "Helmet", match: "หมวกกันน็อก" },
+        { word: "Crosswalk", match: "ทางม้าลาย" },
+        { word: "Red light", match: "ไฟแดง" },
+        { word: "Safe", match: "ปลอดภัย" },
+        { word: "Seatbelt", match: "เข็มขัดนิรภัย" },
+        { word: "Traffic light", match: "สัญญาณไฟจราจร" },
+        { word: "Danger", match: "อันตราย" },
+        { word: "Sidewalk", match: "ทางเท้า" },
+        { word: "Ambulance", match: "รถพยาบาล" },
+        { word: "Fire extinguisher", match: "ถังดับเพลิง" }
+      ],
+      callDialogs: [
+        { text: "Safety first! Remember to look right and left before crossing!", audioText: "Safety first! Remember to look right and left before crossing!", pitch: 1.1, rate: 0.95 }
+      ]
+    },
+    4: {
+      title: "Unit 4: Having Fun 🚲",
+      badge: "Unit 4: Grammar Pattern",
+      grammar: [
+        { title: "How often do you + V.1?", desc: '"How often do you ride a bike?"' },
+        { title: "I + V.1 + twice a week", desc: '"I go swimming twice a week."' }
+      ],
+      builder: {
+        prefix: "I go",
+        sel1: ["swimming", "cycling"],
+        sel2: ["once a week", "twice a month"],
+        sel3: ["with friends", "at the park"],
+        suffix: ".",
+        correctCondition: () => true
+      },
+      matchPairs: [
+        { word: "Swimming", match: "ว่ายน้ำ" },
+        { word: "Cycling", match: "ปั่นจักรยาน" },
+        { word: "Park", match: "สวนสาธารณะ" },
+        { word: "Fun", match: "สนุกสนาน" },
+        { word: "Playground", match: "สนามเด็กเล่น" },
+        { word: "Football", match: "ฟุตบอล" },
+        { word: "Weekend", match: "วันหยุดสุดสัปดาห์" },
+        { word: "Friend", match: "เพื่อน" },
+        { word: "Game", match: "เกม" },
+        { word: "Zoo", match: "สวนสัตว์" }
+      ],
+      callDialogs: [
+        { text: "Hey! What is your favorite fun activity on weekends?", audioText: "Hey! What is your favorite fun activity on weekends?", pitch: 1.25, rate: 1.05 }
+      ]
+    }
+  };
+
+  let currentUnit = 1;
+  let authMode = 'login';
+  let currentUser = null;
+  let isCallActive = false;
+  let callTimerInterval = null;
+
+  /* AUTHENTICATION SYSTEM */
+  function switchAuthMode(mode) {
+    authMode = mode;
+    document.getElementById('tabBtnLogin').classList.toggle('active', mode === 'login');
+    document.getElementById('tabBtnRegister').classList.toggle('active', mode === 'register');
+    document.getElementById('groupName').style.display = mode === 'register' ? 'block' : 'none';
+    document.getElementById('groupStudentId').style.display = mode === 'register' && document.getElementById('btnRoleStudent').classList.contains('active') ? 'block' : 'none';
+    document.getElementById('btnAuthSubmit').textContent = mode === 'login' ? 'เข้าสู่ระบบ 🚀' : 'สร้างบัญชีใช้งาน ✨';
+  }
+
+  function setRole(role) {
+    document.getElementById('btnRoleStudent').classList.toggle('active', role === 'student');
+    document.getElementById('btnRoleTeacher').classList.toggle('active', role === 'teacher');
+    document.getElementById('groupStudentId').style.display = authMode === 'register' && role === 'student' ? 'block' : 'none';
+  }
+
+  function handleAuthSubmit(e) {
+    e.preventDefault();
+    const isTeacher = document.getElementById('btnRoleTeacher').classList.contains('active');
+    const username = document.getElementById('txtUsername').value.trim();
+    const password = document.getElementById('txtPassword').value.trim();
+    const name = document.getElementById('txtName').value.trim() || username;
+    const studentId = document.getElementById('txtStudentId').value;
+
+    const db = getDB();
+
+    if (authMode === 'register') {
+      const existing = db.users.find(u => u.username === username);
+      if (existing) { alert('ชื่อผู้ใช้งานนี้มีในระบบแล้ว!'); return; }
+
+      const newUser = {
+        id: 'user_' + Date.now(),
+        studentNo: isTeacher ? '-' : (studentId || '1'),
+        name: name,
+        username: username,
+        password: password,
+        role: isTeacher ? 'teacher' : 'student',
+        effortScore: 0,
+        streak: 1
+      };
+      db.users.push(newUser);
+      db.currentUserId = newUser.id;
+      saveDB(db);
+      currentUser = newUser;
+    } else {
+      const user = db.users.find(u => u.username === username && u.password === password);
+      if (!user) { alert('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!'); return; }
+      db.currentUserId = user.id;
+      saveDB(db);
+      currentUser = user;
+    }
+
+    loginSuccess();
+  }
+
+  function loginSuccess() {
+    document.getElementById('authView').classList.remove('active');
+    document.getElementById('appView').classList.add('active');
+    document.getElementById('navUserInfo').style.display = 'flex';
+    document.getElementById('userNameDisplay').textContent = currentUser.name;
+    document.getElementById('userRoleBadge').textContent = currentUser.role === 'teacher' ? 'คุณครู' : `นักเรียน เลขที่ ${currentUser.studentNo || ''}`;
+
+    if (currentUser.role === 'teacher') {
+      document.getElementById('teacherTabBtn').style.display = 'inline-block';
+      switchMainTab('teacherTab');
+      renderTeacherTable();
+    } else {
+      document.getElementById('teacherTabBtn').style.display = 'none';
+      switchMainTab('learnTab');
+      selectUnit(1);
+      updateUserStats();
+    }
+  }
+
+  function logout() {
+    const db = getDB();
+    db.currentUserId = null;
+    saveDB(db);
+    currentUser = null;
+    document.getElementById('appView').classList.remove('active');
+    document.getElementById('navUserInfo').style.display = 'none';
+    document.getElementById('authView').classList.add('active');
+  }
+
+  function updateUserStats() {
+    if (!currentUser) return;
+    document.getElementById('studentEffortScore').textContent = currentUser.effortScore || 0;
+  }
+
+  function addEffort(pts) {
+    if (!currentUser) return;
+    currentUser.effortScore = (currentUser.effortScore || 0) + pts;
+    document.getElementById('studentEffortScore').textContent = currentUser.effortScore;
+
+    const db = getDB();
+    const idx = db.users.findIndex(u => u.id === currentUser.id);
+    if (idx !== -1) {
+      db.users[idx].effortScore = currentUser.effortScore;
+      saveDB(db);
+    }
+  }
+
+  /* NAVIGATION & UNIT SWITCHING */
+  function switchMainTab(tabId) {
+    document.querySelectorAll('.tab-page').forEach(page => page.style.display = 'none');
+    document.getElementById(tabId).style.display = 'block';
+
+    const btns = document.querySelectorAll('.nav-tab-btn');
+    btns.forEach(btn => btn.classList.remove('active'));
+
+    if (tabId === 'learnTab') btns[0].classList.add('active');
+    if (tabId === 'callTab') { btns[1].classList.add('active'); triggerRingtone(); }
+    if (tabId === 'matchTab') { btns[2].classList.add('active'); initMatchGame(); }
+    if (tabId === 'surveyTab') btns[3].classList.add('active');
+    if (tabId === 'researchTab') btns[4].classList.add('active');
+    if (tabId === 'teacherTab') btns[5].classList.add('active');
+  }
+
+  function selectUnit(uNum) {
+    currentUnit = uNum;
+    for(let i=1; i<=4; i++) {
+      document.getElementById(`ubtn${i}`).classList.toggle('active', i === uNum);
+    }
+
+    const u = unitsData[uNum];
+    document.getElementById('unitBadge').textContent = u.badge;
+    document.getElementById('unitTitle').textContent = u.title;
+    
+    const gGrid = document.getElementById('grammarGrid');
+    gGrid.innerHTML = '';
+    u.grammar.forEach(g => {
+      gGrid.innerHTML += `<div style="background:#FFF0DA; border:2.5px solid var(--ink); border-radius:16px; padding:14px;"><b>${g.title}</b><div style="font-size:.85rem; color:#555;">${g.desc}</div></div>`;
+    });
+
+    const bControls = document.getElementById('builderControls');
+    bControls.innerHTML = `
+      <span style="font-size:1.1rem; font-weight:600;">${u.builder.prefix}</span>
+      <select class="builder-select" id="sel1" onchange="updateBuilderText()">${u.builder.sel1.map(o=>`<option value="${o}">${o}</option>`).join('')}</select>
+      <select class="builder-select" id="sel2" onchange="updateBuilderText()">${u.builder.sel2.map(o=>`<option value="${o}">${o}</option>`).join('')}</select>
+      <select class="builder-select" id="sel3" onchange="updateBuilderText()">${u.builder.sel3.map(o=>`<option value="${o}">${o}</option>`).join('')}</select>
+      <span style="font-size:1.1rem; font-weight:600;">${u.builder.suffix}</span>
+    `;
+    updateBuilderText();
+  }
+
+  function updateBuilderText() {
+    const u = unitsData[currentUnit];
+    const s1 = document.getElementById('sel1').value;
+    const s2 = document.getElementById('sel2').value;
+    const s3 = document.getElementById('sel3').value;
+    document.getElementById('builderResultText').textContent = `${u.builder.prefix} ${s1} ${s2} ${s3} ${u.builder.suffix}`;
+  }
+
+  function submitSentence() {
+    const u = unitsData[currentUnit];
+    const s1 = document.getElementById('sel1').value;
+    const s2 = document.getElementById('sel2').value;
+    const s3 = document.getElementById('sel3').value;
+
+    if (u.builder.correctCondition(s1, s2, s3)) {
+      alert('🎉 ถูกต้องครับ! ประโยคถูกต้องสมบูรณ์ +5 แต้มความขยัน');
+      addEffort(5);
+    } else {
+      alert('💡 เกือบถูกแล้ว! ลองสลับคำตอบดูอีกทีนะ (+2 แต้มความพยายาม)');
+      addEffort(2);
+    }
+  }
+
+  /* AIRLEARN FACETIME AUDIO & VOICE SYSTEM */
+  let audioCtx = null;
+  let ringtoneInterval = null;
+
+  function triggerRingtone() {
+    if (isCallActive) return;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      playRingtoneBeep();
+      ringtoneInterval = setInterval(playRingtoneBeep, 2000);
+    } catch(e) {}
+  }
+
+  function playRingtoneBeep() {
+    if (!audioCtx || isCallActive) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.4);
+    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.5);
+  }
+
+  function acceptCall() {
+    clearInterval(ringtoneInterval);
+    isCallActive = true;
+    document.getElementById('btnAcceptCall').style.display = 'none';
+    document.getElementById('btnMic').style.display = 'flex';
+    document.getElementById('callStatusTitle').textContent = 'กำลังคุยสายกับ ครูส้ม 🍊';
+    document.getElementById('callStatusSub').textContent = 'พูดคุยด้วยน้ำเสียงธรรมชาติ (Natural Speech)';
+    
+    startCallTimer();
+    speakKruSom(unitsData[currentUnit].callDialogs[0]);
+    addEffort(10);
+  }
+
+  function endCall() {
+    clearInterval(ringtoneInterval);
+    clearInterval(callTimerInterval);
+    isCallActive = false;
+    document.getElementById('btnAcceptCall').style.display = 'flex';
+    document.getElementById('btnMic').style.display = 'none';
+    document.getElementById('kruSomAvatar').classList.remove('speaking');
+    document.getElementById('callStatusTitle').textContent = 'ครูส้ม AI สายโทรเข้า...';
+    document.getElementById('callSubtitles').textContent = 'วางสายเรียบร้อย กดรับสายเพื่อเริ่มใหม่';
+    document.getElementById('callTimer').textContent = '00:00';
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  }
+
+  function startCallTimer() {
+    let sec = 0;
+    clearInterval(callTimerInterval);
+    callTimerInterval = setInterval(() => {
+      sec++;
+      const m = String(Math.floor(sec/60)).padStart(2, '0');
+      const s = String(sec%60).padStart(2, '0');
+      document.getElementById('callTimer').textContent = `${m}:${s}`;
+    }, 1000);
+  }
+
+  /* NATURAL SPEECH SYNTHESIS (INTONATION & PITCH MODULATION) */
+  function speakKruSom(dialogObj) {
+    document.getElementById('callSubtitles').textContent = dialogObj.text;
+    document.getElementById('kruSomAvatar').classList.add('speaking');
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(dialogObj.audioText || dialogObj.text);
+      utter.lang = 'en-US';
+      utter.pitch = dialogObj.pitch || 1.2; // Higher pitch for dynamic expressive voice
+      utter.rate = dialogObj.rate || 1.0;   // Natural pacing
+
+      utter.onend = () => {
+        document.getElementById('kruSomAvatar').classList.remove('speaking');
+      };
+
+      window.speechSynthesis.speak(utter);
+    } else {
+      setTimeout(() => document.getElementById('kruSomAvatar').classList.remove('speaking'), 2000);
+    }
+  }
+
+  function sendTextToCall() {
+    if (!isCallActive) { alert('กรุณากดรับสาย FaceTime ครูส้มก่อนนะ!'); return; }
+    const input = document.getElementById('txtCallInput');
+    const val = input.value.trim();
+    if (!val) return;
+
+    input.value = '';
+    document.getElementById('callSubtitles').textContent = `คุณ: "${val}"`;
+
+    setTimeout(() => {
+      const resp = {
+        text: `Wonderful! You said "${val}". Your intonation is improving so much!`,
+        audioText: `Wonderful! You said ${val}. Your intonation is improving so much!`,
+        pitch: 1.25,
+        rate: 1.0
+      };
+      speakKruSom(resp);
+      addEffort(5);
+    }, 1000);
+  }
+
+  function toggleMic() {
+    if (!isCallActive) return;
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      alert('เบราว์เซอร์ของคุณไม่รองรับการจำเสียงพูด แนะนำให้ใช้พิมพ์แทนได้เลยครับ');
+      return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+
+    document.getElementById('callSubtitles').textContent = '🎙️ ครูส้มกำลังฟังคุณพูดภาษาอังกฤษ...';
+
+    recognition.onresult = function(event) {
+      const speechToText = event.results[0][0].transcript;
+      document.getElementById('callSubtitles').textContent = `คุณพูดว่า: "${speechToText}"`;
+      setTimeout(() => {
+        speakKruSom({
+          text: `Great job saying: "${speechToText}"! You sound so confident!`,
+          audioText: `Great job saying ${speechToText}! You sound so confident!`,
+          pitch: 1.2,
+          rate: 1.0
+        });
+        addEffort(8);
+      }, 800);
+    };
+
+    recognition.start();
+  }
+
+  /* MATCHING GAME SYSTEM (10 pairs, 60-second timer) */
+  const MATCH_TIME_LIMIT = 60; // seconds
+  let matchSelected = null;
+  let matchTimerInterval = null;
+  let matchTimeLeft = MATCH_TIME_LIMIT;
+  let matchedCount = 0;
+  let matchTotalPairs = 0;
+  let matchGameActive = false;
+
+  function initMatchGame() {
+    clearInterval(matchTimerInterval);
+    const pairs = unitsData[currentUnit].matchPairs;
+    matchTotalPairs = pairs.length;
+    matchedCount = 0;
+    matchTimeLeft = MATCH_TIME_LIMIT;
+    matchGameActive = true;
+    matchSelected = null;
+
+    let cards = [];
+    pairs.forEach((p, idx) => {
+      cards.push({ id: idx, text: p.word, type: 'en' });
+      cards.push({ id: idx, text: p.match, type: 'th' });
+    });
+
+    cards.sort(() => Math.random() - 0.5);
+
+    const grid = document.getElementById('matchGrid');
+    grid.innerHTML = '';
+    cards.forEach((c, i) => {
+      grid.innerHTML += `<div class="match-card" id="mcard_${i}" onclick="clickMatchCard(${i}, ${c.id}, '${c.text}')">${c.text}</div>`;
+    });
+
+    updateMatchTimerDisplay();
+    updateMatchProgressDisplay();
+
+    matchTimerInterval = setInterval(() => {
+      matchTimeLeft--;
+      updateMatchTimerDisplay();
+      if (matchTimeLeft <= 0) {
+        finishMatchGame(false);
+      }
+    }, 1000);
+  }
+
+  function updateMatchTimerDisplay() {
+    const m = String(Math.floor(matchTimeLeft / 60)).padStart(2, '0');
+    const s = String(matchTimeLeft % 60).padStart(2, '0');
+    const el = document.getElementById('matchTimerDisplay');
+    if (el) el.textContent = `⏱️ ${m}:${s}`;
+  }
+
+  function updateMatchProgressDisplay() {
+    const el = document.getElementById('matchProgressDisplay');
+    if (el) el.textContent = `✅ ${matchedCount} / ${matchTotalPairs} คู่`;
+  }
+
+  function finishMatchGame(won) {
+    matchGameActive = false;
+    clearInterval(matchTimerInterval);
+    if (won) {
+      alert(`🎉 เก่งมาก! จับคู่ครบทั้ง ${matchTotalPairs} คู่ ทันเวลาพอดี! +15 แต้มความขยัน`);
+      addEffort(15);
+    } else {
+      alert(`⏰ หมดเวลาแล้ว! จับคู่ได้ ${matchedCount} / ${matchTotalPairs} คู่ ลองใหม่อีกครั้งนะ 💪`);
+    }
+  }
+
+  function clickMatchCard(index, pairId, text) {
+    if (!matchGameActive) return;
+    const cardEl = document.getElementById(`mcard_${index}`);
+    if (cardEl.classList.contains('matched')) return;
+
+    if (!matchSelected) {
+      matchSelected = { index, pairId, el: cardEl };
+      cardEl.classList.add('selected');
+    } else {
+      if (matchSelected.index === index) return;
+
+      if (matchSelected.pairId === pairId) {
+        cardEl.classList.add('matched');
+        matchSelected.el.classList.add('matched');
+        matchSelected.el.classList.remove('selected');
+        matchSelected = null;
+        matchedCount++;
+        updateMatchProgressDisplay();
+        addEffort(5);
+        if (matchedCount >= matchTotalPairs) {
+          finishMatchGame(true);
+        }
+      } else {
+        cardEl.classList.add('selected');
+        setTimeout(() => {
+          cardEl.classList.remove('selected');
+          if (matchSelected) matchSelected.el.classList.remove('selected');
+          matchSelected = null;
+        }, 500);
+      }
+    }
+  }
+
+  /* SURVEY (emoji-based attitude scale) */
+  function saveSurveyScore(qid, val, emoji, btnEl) {
+    const question = btnEl.closest('.survey-question');
+    if (question) {
+      question.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('picked'));
+      btnEl.classList.add('picked');
+    }
+    alert(`บันทึกคำตอบ ${emoji} (${val}/5) เรียบร้อยแล้ว! +5 แต้มความขยัน`);
+    addEffort(5);
+  }
+
+  /* TEACHER DASHBOARD FOR 100 STUDENTS */
+  function initTeacherDemoData() {
+    const db = getDB();
+    if (db.users.filter(u => u.role === 'student').length < 10) {
+      for (let i = 1; i <= 100; i++) {
+        const username = `student${i}`;
+        if (!db.users.find(u => u.username === username)) {
+          db.users.push({
+            id: `st_${i}`,
+            studentNo: i,
+            name: `นักเรียน เลขที่ ${i}`,
+            username: username,
+            password: `p${i}`,
+            role: 'student',
+            effortScore: Math.floor(Math.random() * 150) + 20,
+            streak: Math.floor(Math.random() * 5) + 1
+          });
+        }
+      }
+      saveDB(db);
+    }
+    renderTeacherTable();
+    alert('สร้างบัญชีนักเรียนจำลอง 100 บัญชีเรียบร้อยแล้ว!');
+  }
+
+  function renderTeacherTable() {
+    const db = getDB();
+    const students = db.users.filter(u => u.role === 'student');
+    const tbody = document.getElementById('teacherStudentTable');
+    tbody.innerHTML = '';
+
+    students.forEach(s => {
+      tbody.innerHTML += `
+        <tr>
+          <td><b>${s.studentNo || '-'}</b></td>
+          <td>${s.name}</td>
+          <td><code>${s.username}</code></td>
+          <td><span class="chip-tag" style="background:var(--yellow);">${s.effortScore || 0} แต้ม</span></td>
+          <td><span class="chip-tag" style="background:var(--mint); color:#fff;">พร้อมใช้งาน</span></td>
+        </tr>
+      `;
+    });
+  }
+
+  // AUTO-LOGIN CHECK ON LOAD
+  window.onload = function() {
+    const db = getDB();
+    if (db.currentUserId) {
+      const user = db.users.find(u => u.id === db.currentUserId);
+      if (user) {
+        currentUser = user;
+        loginSuccess();
+      }
+    }
+  };
+</script>
+</body>
+</html>
